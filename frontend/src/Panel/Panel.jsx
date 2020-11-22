@@ -121,9 +121,7 @@ class Panel extends React.Component {
                 </form>
                 <Select value={catId} onChange={this.handleSelect}>
                     {
-                        categories.map((cat, i) => {
-                            return <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>
-                        })
+                        categories.map((cat, i) => <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>)
                     }
                 </Select>
                 <h1> {catId} </h1>
