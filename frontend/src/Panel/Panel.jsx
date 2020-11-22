@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button } from '@material-ui/core'
+import { Input, Button, MenuItem, Select } from '@material-ui/core'
 
 import './Panel.css'
 
@@ -12,14 +12,30 @@ class Panel extends React.Component {
         resPhone: '',
         resAddress: '',
         catId: '',
-        restId: ''
+        restId: '',
+        random: '',
+        categories: []
 
+    }
+
+    componentDidMount = () => {
+        this.getCat()
     }
 
     handleChange = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
         console.log(value)
+    }
+
+    getCat = () => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch('/categories/getCategories', requestOptions)
+            .then(response => response.json())
+            .then(data => this.setState({ categories: data.categories }))
     }
 
     addCat = (obj) => {
@@ -30,7 +46,7 @@ class Panel extends React.Component {
         };
         fetch('/categories/createCat', requestOptions)
             .then(response => response.json())
-            .then(data => this.setState({ catId:data.id }));
+            .then(data => this.setState({ catId: data.id }));
     }
 
     addRest = (obj) => {
@@ -54,11 +70,15 @@ class Panel extends React.Component {
         this.addRest(this.state)
     }
 
+    handleSelect = (e) => {
+        console.log(e.target.value)
+        this.setState({ catId: e.target.value })
+    }
 
 
 
     render() {
-        const { catName, catImg, resName, resImg, resPhone, resAddress } = this.state
+        const { catName, catImg, resName, resImg, resPhone, resAddress, catId, categories } = this.state
         return (
             <div className='Panel'>
                 <form className='Panel__category' onSubmit={this.handleCatSubmit}>
@@ -99,6 +119,14 @@ class Panel extends React.Component {
                         onChange={this.handleChange} />
                     <Button type='submit' variant="outlined" color="primary" > Add Res </Button>
                 </form>
+                <Select value={catId} onChange={this.handleSelect}>
+                    {
+                        categories.map((cat, i) => {
+                            return <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>
+                        })
+                    }
+                </Select>
+                <h1> {catId} </h1>
             </div >
         )
     }
