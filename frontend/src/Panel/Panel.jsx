@@ -11,7 +11,9 @@ class Panel extends React.Component {
         resImg: '',
         resPhone: '',
         resAddress: '',
-        cateId: ''
+        catId: '',
+        restId: ''
+
     }
 
     handleChange = (e) => {
@@ -20,7 +22,7 @@ class Panel extends React.Component {
         console.log(value)
     }
 
-    postReq = (obj) => {
+    addCat = (obj) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -28,12 +30,28 @@ class Panel extends React.Component {
         };
         fetch('/categories/createCat', requestOptions)
             .then(response => response.json())
+            .then(data => this.setState({ catId:data.id }));
+    }
+
+    addRest = (obj) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        fetch('/resturants/createRes', requestOptions)
+            .then(response => response.json())
             .then(data => console.log(data));
     }
 
     handleCatSubmit = (e) => {
-        e.prevetDefault()
-        this.postReq(this.state)
+        e.preventDefault()
+        this.addCat(this.state)
+    }
+
+    handlerestSubmit = (e) => {
+        e.preventDefault()
+        this.addRest(this.state)
     }
 
 
@@ -57,7 +75,7 @@ class Panel extends React.Component {
                         onChange={this.handleChange} />
                     <Button type='submit' variant="outlined" color="primary" > Add Cat </Button>
                 </form>
-                <form className='Panel__resturant' onSubmit={this.handleSubmit}>
+                <form className='Panel__resturant' onSubmit={this.handlerestSubmit}>
                     <h1> Add A resturant </h1>
                     <Input
                         type='text'

@@ -5,11 +5,11 @@ const Restaurant = require('../models/Resturant')
 router.post('/createRes', (req, res) => {
 
     let restau = new Restaurant({
-      resCategory: req.body.resCategory,
-      Name: req.body.Name,
-      Image: req.body.Image,
-      Phone: req.body.Phone,
-      Address: req.body.Address
+      resCategory: req.body.catId,
+      Name: req.body.resName,
+      Image: req.body.resImg,
+      Phone: req.body.resPhone,
+      Address: req.body.resAddress
     })
     restau.save((err, restau) => {
       if (err) return res.status(404).json({error:err})
