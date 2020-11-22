@@ -3,9 +3,6 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var CategorySchema = new Schema({
-    catRestaurants: [{
-         type: mongoose.Schema.Types.ObjectId,
-         ref: 'Restaurant' }],
     Name:
     {
         type: String

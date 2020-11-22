@@ -15,7 +15,7 @@ class Zuwar extends React.Component {
 
     componentDidMount() {
         const id = "5fb4cc6bed78552714cfb3af"
-        axios.get(`http://localhost:5000/fooddose/fastfoodres/royal/${id}`)
+        axios.get(`http://localhost:5000/fastfoodres/royal/${id}`)
             .then(fastfoodres => {
                 this.setState({
                     rayan: fastfoodres.data[31]

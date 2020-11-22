@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-var url = "mongodb+srv://admin:admin0000@cluster0.v0kln.mongodb.net/usertable?retryWrites=true&w=majority"
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
-var db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error'))
-db.once('open', function () {
-    console.log('connection sucessful')
-})
+// var url = "mongodb+srv://m0moooZ:momoftw1!@react-blog.pf36a.mongodb.net/skyscan?retryWrites=true&w=majority"
+const db = mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://m0moooZ:momoftw1!@react-blog.pf36a.mongodb.net/Resturants?retryWrites=true&w=majority',
+    {
+        useNewUrlParser: true, useUnifiedTopology: true,
+        useCreateIndex: true, useFindAndModify: false
+    })
+    .then(() => console.log('MongoDB Connected...'))
+    .catch(err => console.log(err))
 module.exports = db
