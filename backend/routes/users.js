@@ -6,72 +6,58 @@ const User = require('../models/User')
 const auth = require('../middleware')
 
 
-router.post('/signup', (req, res) => {
-    const Password = req.body.Password
-    const saltRounds = 10
-    let data = req.body
-
-    User.findOne({ Email: req.body.Email })
-        .then(user => {
-            if (user) return res.json({ message: "email already exists" })
-
-            bcrypt.genSalt(saltRounds)
-                .then((salt) => bcrypt.hash(Password, salt))
-                .then((hashedPassword) => {
-                    data.Password = hashedPassword
-                    let user = new User(data)
-                    user.save()
-                        .then((data) => jwt.sign({ id: data._id }, 'secret', { expiresIn: 90000 }, (err, token) => {
-                            res.header("jwt-auth", token).json({
-                                sucess: true,
-                                token: token
-                            })
-                        }))
-                        .catch(err => res.status(404).send(err))
-                })
-        })
-        .catch(err => res.send(err))
+router.get('/auth' , auth , (req,res) => {
+    res.json({
+        id : req.user._id,
+        name : req.user.name,
+        email: req.user.email,
+        success: true
+    })
 })
 
-
-
-
-//LogIn route 
-router.post('/login', (req, res) => {
-
-    User.findOne({ Email: req.body.Email })
-        .then(data => {
-            if (data) {
-                bcrypt.compare(req.body.Password, data.Password)
-                    .then(data1 => {
-                        if (data1) {
-                            jwt.sign({ id: data._id }, 'secret', { expiresIn: 90000 }, (err, token) => {
-                                if (err) return res.json({ message: "err creating the token" })
-                                res.header("jwt-auth", token).json({
-                                    sucess: true,
-                                    token: token
-                                })
-                            })
-                        } else {
-                            throw Error("incorrect password")
-                        }
-                    })
-            } else {
-                throw Error("incorrect email")
-            }
+router.post('/signup', async (req, res) => {
+    
+    try {
+        if(req.body.password === '' ) throw Error
+        const hashedPw = await bcrypt.hash(req.body.password, 10) // hasing the pw
+        console.log(hashedPw)
+        let user = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPw
         })
-        .catch(err => res.status(404).send(err))
+        await user.save()  // storing hashedpw to db
+        const token = await jwt.sign({ _id: user._id }, 'secret') // generate token
+        console.log(token)
+        res.header('auth-rest', token).status(201).json({
+            success: true,
+            token,
+            userId : user._id
+        }) // send token as a res and header
+
+    } catch {
+        res.status(404).json({
+            success: false
+        })
+
+    }
 })
 
-router.get("/auth", auth, (req, res) => {
-    console.log(req.user)
-    if (req.user) {
-        res.json({
-            id: req.user._id,
-            UserName: req.user.UserName,
-            Password: req.user.Password,
-            Email: req.user.Email
-        })
+router.post('/login', async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email }) // find user  in db
+        const match = await bcrypt.compare(req.body.password, user.password) // compare given password with hashed db password
+        console.log(match)
+        if (match) {
+            const token = await jwt.sign({ _id: user._id }, 'secret') // generate token in password match
+            res.header('auth-rest', token).status(201).json({ // sending token as a res and header
+                success: true,
+                token,
+                userId : user._id
+            })
+        }
+    } catch {
+        res.status(404).json({ success: false })
     }
 })
 
