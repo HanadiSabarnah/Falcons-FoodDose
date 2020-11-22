@@ -7,7 +7,6 @@ var RestaurantSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },
-
     Name:
     {
         type: String

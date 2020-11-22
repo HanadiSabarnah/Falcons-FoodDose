@@ -50,6 +50,11 @@ import Yasmeen from "../src/components/Yasmeen/yasmeen.js"
 import Sara from "../src/components/Sara/sara.js"
 import Cocktail from "../src/components/Cocktail/cocktail.js"
 import Fayrouz from "../src/components/Fayrouz/fayroz.js"
+
+//My imports
+import Panel from './Panel/Panel'
+
+
 class App extends Component {
     // constructor(props) {
     //     super(props);
@@ -60,6 +65,7 @@ class App extends Component {
             <div className="App" >
                 <div>
                     <Router>
+                    <Route path="/panel" exact component={() => <Panel />} />
                         <Route path="/" exact component={() => <Welcome />} />
                         <Route path="/home" exact component={() => <Home />} />
                         <Route path="/login" exact component={() => <Login />} />
