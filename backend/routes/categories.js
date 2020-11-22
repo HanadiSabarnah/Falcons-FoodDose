@@ -14,5 +14,13 @@ router.post('/createCat', (req, res) => {
     })
   })
 
+  router.get('/getCategories', (req,res) => {
+    Category.find()
+      .exec( (err,categories)  => {
+        if(err) return res.status(404).json({success : false})
+        res.status(200).json({success:true , categories})
+      })
+  })
+
 
 module.exports = router
