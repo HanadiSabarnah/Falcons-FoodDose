@@ -6,10 +6,10 @@ const User = require('../models/User')
 const auth = require('../middleware')
 
 
-router.get('/auth' , auth , (req,res) => {
+router.get('/auth', auth, (req, res) => {
     res.json({
-        id : req.user._id,
-        name : req.user.name,
+        id: req.user._id,
+        name: req.user.name,
         email: req.user.email,
         success: true
     })
@@ -21,9 +21,9 @@ router.get('/auth' , auth , (req,res) => {
 // res ( token  )
 
 router.post('/signup', async (req, res) => {
-    
+
     try {
-        if(req.body.password === '' ) throw Error
+        if (req.body.password === '') throw Error
         const hashedPw = await bcrypt.hash(req.body.Password, 10) // hasing the pw
         console.log(hashedPw)
         let user = new User({
@@ -37,10 +37,10 @@ router.post('/signup', async (req, res) => {
         res.header('auth-rest', token).status(201).json({
             success: true,
             token,
-            userId : user._id
+            user
         }) // send token as a res and header
 
-    } catch(err) {
+    } catch (err) {
         res.status(404).json({
             success: false,
             err
@@ -64,11 +64,11 @@ router.post('/login', async (req, res) => {
             res.header('auth-rest', token).status(201).json({ // sending token as a res and header
                 success: true,
                 token,
-                userId : user._id
+                user
             })
         }
-    } catch(err) {
-        res.status(404).json({ success: false,err })
+    } catch (err) {
+        res.status(404).json({ success: false, err })
     }
 })
 
@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
 //       token: ""
 //     })
 //   })
-  
+
 
 
 module.exports = router
