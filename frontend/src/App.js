@@ -4,6 +4,8 @@ import Footer from './components/SharedComponents/Footer/footer.js';
 import Login from '../src/components/Pages/LogIn/LogIn.js'
 import SignUp from '../src/components/Pages/Signup/signUp.js';
 import Home from './components/Pages/Home/home';
+import Restaurants from './components/Pages/Restaurants/Restaurants'
+import Menu from './components/Pages/Menu/Menu'
 
 //My imports
 import Panel from './components/Pages/Panel/Panel'
@@ -26,7 +28,8 @@ class App extends Component {
                         <Route path="/signup" exact component={() => <SignUp />} />
                         {/* <Route path="/logout" exact component={() => <Logout />} /> */}
                         {/* <Route path="/" exact component={() => <categories />} /> */}
-                        {/* <Route path="/category/:id" exact component={() => <Resturants />} /> */} console.log(math.params.id)
+                        <Route path="/category/:id" exact component={Restaurants} /> 
+                        <Route path="/restaurant/:id" exact component={Menu} /> 
                     </Router>
                 </div>
                 {/* <div className="footer">
