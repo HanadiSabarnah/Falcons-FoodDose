@@ -32,7 +32,7 @@ class Panel extends React.Component {
     }
 
     handleCatSubmit = (e) => {
-        e.prevetDefault()
+        e.preventDefault()
         this.postReq(this.state)
     }
 
