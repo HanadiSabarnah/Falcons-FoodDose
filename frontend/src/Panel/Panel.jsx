@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button } from '@material-ui/core'
+import { Input, Button, MenuItem, Select } from '@material-ui/core'
 
 import './Panel.css'
 
@@ -11,7 +11,15 @@ class Panel extends React.Component {
         resImg: '',
         resPhone: '',
         resAddress: '',
-        cateId: ''
+        catId: '',
+        restId: '',
+        random: '',
+        categories: []
+
+    }
+
+    componentDidMount = () => {
+        this.getCat()
     }
 
     handleChange = (e) => {
@@ -20,7 +28,17 @@ class Panel extends React.Component {
         console.log(value)
     }
 
-    postReq = (obj) => {
+    getCat = () => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch('/categories/getCategories', requestOptions)
+            .then(response => response.json())
+            .then(data => this.setState({ categories: data.categories }))
+    }
+
+    addCat = (obj) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -28,22 +46,47 @@ class Panel extends React.Component {
         };
         fetch('/categories/createCat', requestOptions)
             .then(response => response.json())
+            .then(data => this.setState({ catId: data.id }));
+    }
+
+    addRest = (obj) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        fetch('/resturants/createRes', requestOptions)
+            .then(response => response.json())
             .then(data => console.log(data));
     }
 
     handleCatSubmit = (e) => {
         e.preventDefault()
-        this.postReq(this.state)
+        this.addCat(this.state)
+    }
+
+    handlerestSubmit = (e) => {
+        e.preventDefault()
+        this.addRest(this.state)
+    }
+
+    handleSelect = (e) => {
+        console.log(e.target.value)
+        this.setState({ catId: e.target.value })
     }
 
 
 
-
     render() {
-        const { catName, catImg, resName, resImg, resPhone, resAddress } = this.state
+        const { catName, catImg, resName, resImg, resPhone, resAddress, catId, categories } = this.state
         return (
             <div className='Panel'>
-                <form className='Panel__category' onSubmit={this.handleCatSubmit}>
+                <Select value={catId} onChange={this.handleSelect}>
+                    {
+                        categories.map((cat, i) => <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>)
+                    }
+                </Select>
+                {/* <form className='Panel__category' onSubmit={this.handleCatSubmit}>
                     <h1>Add a category</h1>
                     <Input
                         type='text'
@@ -56,8 +99,8 @@ class Panel extends React.Component {
                         name='catImg'
                         onChange={this.handleChange} />
                     <Button type='submit' variant="outlined" color="primary" > Add Cat </Button>
-                </form>
-                <form className='Panel__resturant' onSubmit={this.handleSubmit}>
+                </form> */}
+                <form className='Panel__resturant' onSubmit={this.handlerestSubmit}>
                     <h1> Add A resturant </h1>
                     <Input
                         type='text'
@@ -81,6 +124,8 @@ class Panel extends React.Component {
                         onChange={this.handleChange} />
                     <Button type='submit' variant="outlined" color="primary" > Add Res </Button>
                 </form>
+                
+                {/* <h1> {catId} </h1> */}
             </div >
         )
     }
