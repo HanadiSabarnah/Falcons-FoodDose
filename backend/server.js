@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 // app.use('/fooddose', routers)
 
 app.use('/users', require('./routes/users'));
-app.use('/restaurant', require('./routes/restaurant'));
+app.use('/restaurant', require('./routes/resturants'));
 app.use('/categories', require('./routes/categories'));
 
 
