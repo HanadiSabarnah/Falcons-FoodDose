@@ -1,0 +1,30 @@
+.restaurant {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 25px;
+}
+
+.restaurant__Link {
+    text-decoration: none;
+    color: black
+}
+
+.restaurant__details{
+    margin: 5px;
+}
+
+.restaurant__image {
+    width: 210px;
+    height: 155px;
+    opacity: 1;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    background-color: black;
+}
+
+.restaurant__image:hover {
+    opacity: 0.6;
+}

@@ -40,8 +40,9 @@ router.post('/restFindById', (req, res) => {
 
 
 //find  restaurants  by  category id
-router.post('/FindAllResById', (req, res) => {
-  Restaurant.find({ resCategory: req.body.resCategory })
+router.post('/getRestaurants', (req, res) => {
+  console.log(req.body)
+  Restaurant.find({ resCategory: req.body.categoryId })
     .populate('resCategory')
     .exec((err, rest) => {
       if (err) return res.status(404).json({ success: false })
