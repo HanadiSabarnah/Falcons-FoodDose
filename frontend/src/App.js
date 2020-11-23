@@ -4,6 +4,8 @@ import Footer from './components/SharedComponents/Footer/footer.js';
 import Login from '../src/components/Pages/LogIn/LogIn.js'
 import SignUp from '../src/components/Pages/Signup/signUp.js';
 import Home from './components/Pages/Home/home';
+import Restaurants from './components/Pages/Restaurants/Restaurants'
+import Menu from './components/Pages/Menu/Menu'
 
 //My imports
 import Panel from './components/Pages/Panel/Panel'
@@ -49,6 +51,7 @@ class App extends Component {
         return (
             <div className="App" >
                 <div>
+
                     <Switch>
                         <Route path="/panel" exact render={() => <Panel />} />
                         {/* <Route path="/" exact render={() => <Welcome />} /> */}
@@ -56,9 +59,12 @@ class App extends Component {
                         <Route path="/login" exact render={(props) => <Login setEmail={this.setEmail} setName={this.setName} otherProps={props} />} />
                         <Route path="/signup" exact render={(props) => <SignUp setEmail={this.setEmail} setName={this.setName} otherProps={props} />} />
                         {/* <Route path="/logout" exact render={() => <Logout />} /> */}
+                         <Route path="/category/:id" exact component={Restaurants} /> 
+                         <Route path="/restaurant/:id" exact component={Menu} /> 
                         {/* <Route path="/" exact render={() => <categories />} /> */}
                         {/* <Route path="/category/:id" exact render={() => <Resturants />} /> */}
                     </Switch>
+
                 </div>
                 {/* <div className="footer">
                     <Footer />
