@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Footer from './components/SharedComponents/Footer/footer.js';
 import Login from '../src/components/Pages/LogIn/LogIn.js'
 import SignUp from '../src/components/Pages/Signup/signUp.js';
@@ -30,7 +30,7 @@ class App extends Component {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-rest' : localStorage.getItem('auth-rest')
+                'auth-rest': localStorage.getItem('auth-rest')
             },
         };
         fetch('users/auth', requestOptions)
@@ -59,8 +59,8 @@ class App extends Component {
                         <Route path="/login" exact render={(props) => <Login setEmail={this.setEmail} setName={this.setName} otherProps={props} />} />
                         <Route path="/signup" exact render={(props) => <SignUp setEmail={this.setEmail} setName={this.setName} otherProps={props} />} />
                         {/* <Route path="/logout" exact render={() => <Logout />} /> */}
-                         <Route path="/category/:id" exact component={Restaurants} /> 
-                         <Route path="/restaurant/:id" exact component={Menu} /> 
+                        <Route path="/category/:id" exact component={Restaurants} />
+                        <Route path="/restaurant/:id" exact component={Menu} />
                         {/* <Route path="/" exact render={() => <categories />} /> */}
                         {/* <Route path="/category/:id" exact render={() => <Resturants />} /> */}
                     </Switch>
