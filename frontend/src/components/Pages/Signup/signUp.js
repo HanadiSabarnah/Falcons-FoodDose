@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-// import '../../rest-toDelete/Shiekhaljabal/node_modules/bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+
 import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField, Typography, FormControl } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import './signUp.css';
-import Header from '../../SharedComponents/Header/header.js'
 
 class SignUp extends Component {
     constructor(props) {
@@ -16,68 +13,55 @@ class SignUp extends Component {
             Password: '',
             Email: ''
         }
-        this.changeUserName = this.changeUserName.bind(this);
-        this.changePassword = this.changePassword.bind(this);
-        this.changeEmail = this.changeEmail.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    changeUserName(e) {
-        this.setState({ UserName: e.target.value })
-    }
-
-    changePassword(e) {
-        this.setState({ Password: e.target.value })
-    }
-
-    changeEmail(e) {
-        this.setState({ Email: e.target.value })
-    }
-    onSubmit(e) {
-        e.preventDefault()
-        const registered = {
-            UserName: this.state.UserName,
-            Password: this.state.Password,
-            Email: this.state.Email
-        }
-        fetch('http://localhost:5000/fooddose/signup', {
+    postReq = (obj) => {
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state),
-        })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        fetch('users/signup', requestOptions)
             .then(response => response.json())
             .then(data => {
-                localStorage.setItem("jwt-auth", data.token)
-                alert("you registered sucssesfully");
-                window.location.href = '/login'            // to go from signup to signin
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                localStorage.setItem('auth-rest' , data.token)
+                localStorage.setItem('userId' , data.user._id)
+                this.props.setEmail(data.user.email)
+                this.props.setName(data.user.name)
+                console.log(data)
+                this.props.otherProps.history.push('/home')
             });
-
-        this.setState({
-            UserName: '',
-            Password: '',
-            Email: ''
-        })
     }
+
+    handleChange = (e) => {
+        const { name, value } = e.target
+        this.setState({ [name]: value })
+        // console.log(value)
+    }
+
+    handleSubmit = (e) =>{
+        e.preventDefault()
+        this.postReq(this.state)
+    }
+
+
     render() {
+        const { UserName, Password, Email } = this.state
         return (
             <div >
-                <Header />
+
                 <Typography component="h1" variant="h3" align="center" id="title"> Signup</Typography><br />
                 <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
 
-                    <form onSubmit={this.onSubmit} >
+                    <form onSubmit={this.handleSubmit} >
                         <FormControl margin="normal" id="input" >
                             <TextField
                                 required
-                                id="username"
-                                name="username"
-                                value={this.state.UserName}
-                                onChange={this.changeUserName}
+                                id="UserName"
+                                name="UserName"
+                                value={UserName}
+                                onChange={this.handleChange}
                                 label="UserName" variant="outlined"
 
                             />
@@ -85,36 +69,33 @@ class SignUp extends Component {
                         <FormControl margin="normal" >
                             <TextField
                                 required
-                                id="password"
-                                name="password"
-                                type="Password"
-                                value={this.state.Password}
-                                onChange={this.changePassword}
-                                label="Password" variant="outlined"
+                                id="Email"
+                                name="Email"
+                                type="email"
+                                value={Email}
+                                onChange={this.handleChange}
+                                label="Email" variant="outlined"
                             />
                         </FormControl><br />
                         <FormControl margin="normal" >
                             <TextField
                                 required
-                                id="email"
-                                name="email"
-                                type="email"
-                                value={this.state.Email}
-                                onChange={this.changeEmail}
-                                label="Email" variant="outlined"
+                                id="Password"
+                                name="Password"
+                                type="Password"
+                                value={Password}
+                                onChange={this.handleChange}
+                                label="Password" variant="outlined"
                             />
+                            <Button id="btn"
+                                type="submit"
+                                size="large"
+                                variant="contained"
+                                justifyContent="center"
+                            >
+                                Signup</Button>
                         </FormControl><br /><br />
-                        <Button id="btn"
-                            onClick={this.handleSubmit}
-                            type="submit"
-                            size="large"
-                            variant="contained"
-                            justifyContent="center"
 
-
-                        >
-                            Signup
-              </Button>
                     </form>
 
                 </Box>
