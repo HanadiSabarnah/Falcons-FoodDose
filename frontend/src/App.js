@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Footer from './components/SharedComponents/Footer/footer.js';
 import Login from '../src/components/Pages/LogIn/LogIn.js'
 import SignUp from '../src/components/Pages/Signup/signUp.js';
-import Home from './components/Pages/Home/home.js';
+import Home from './components/Pages/Home/home';
 
 //My imports
 import Panel from './components/Pages/Panel/Panel'
@@ -26,8 +26,7 @@ class App extends Component {
                         <Route path="/signup" exact component={() => <SignUp />} />
                         {/* <Route path="/logout" exact component={() => <Logout />} /> */}
                         {/* <Route path="/" exact component={() => <categories />} /> */}
-                        {/* <Route path="/:id" exact component={() => <Resturants />} /> */} console.log(math.params.id)
-             
+                        {/* <Route path="/category/:id" exact component={() => <Resturants />} /> */} console.log(math.params.id)
                     </Router>
                 </div>
                 {/* <div className="footer">
