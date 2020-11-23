@@ -15,15 +15,20 @@ router.get('/auth' , auth , (req,res) => {
     })
 })
 
+// hash .. 
+// store hashed pw and user in db
+// generate token ! (sign token 3ala site jwt bl id for the user stored in db)
+// res ( token  )
+
 router.post('/signup', async (req, res) => {
     
     try {
         if(req.body.password === '' ) throw Error
-        const hashedPw = await bcrypt.hash(req.body.password, 10) // hasing the pw
+        const hashedPw = await bcrypt.hash(req.body.Password, 10) // hasing the pw
         console.log(hashedPw)
         let user = new User({
-            name: req.body.name,
-            email: req.body.email,
+            name: req.body.UserName,
+            email: req.body.Email,
             password: hashedPw
         })
         await user.save()  // storing hashedpw to db
@@ -35,18 +40,24 @@ router.post('/signup', async (req, res) => {
             userId : user._id
         }) // send token as a res and header
 
-    } catch {
+    } catch(err) {
         res.status(404).json({
-            success: false
+            success: false,
+            err
         })
 
     }
 })
 
+// user is exit ? 
+// pw is the same ? ! 
+// generate token 
+// res   token 
+
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email }) // find user  in db
-        const match = await bcrypt.compare(req.body.password, user.password) // compare given password with hashed db password
+        const user = await User.findOne({ email: req.body.Email }) // find user  in db
+        const match = await bcrypt.compare(req.body.Password, user.password) // compare given password with hashed db password
         console.log(match)
         if (match) {
             const token = await jwt.sign({ _id: user._id }, 'secret') // generate token in password match
@@ -56,16 +67,16 @@ router.post('/login', async (req, res) => {
                 userId : user._id
             })
         }
-    } catch {
-        res.status(404).json({ success: false })
+    } catch(err) {
+        res.status(404).json({ success: false,err })
     }
 })
 
-router.get("/logout", (req, res) => {
-    res.header("jwt-auth", "", { maxAge: 1 }).json({
-      token: ""
-    })
-  })
+// router.get("/logout", (req, res) => {
+//     res.header("jwt-auth", "", { maxAge: 1 }).json({
+//       token: ""
+//     })
+//   })
   
 
 

@@ -81,7 +81,12 @@ class Panel extends React.Component {
         const { catName, catImg, resName, resImg, resPhone, resAddress, catId, categories } = this.state
         return (
             <div className='Panel'>
-                <form className='Panel__category' onSubmit={this.handleCatSubmit}>
+                <Select value={catId} onChange={this.handleSelect}>
+                    {
+                        categories.map((cat, i) => <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>)
+                    }
+                </Select>
+                {/* <form className='Panel__category' onSubmit={this.handleCatSubmit}>
                     <h1>Add a category</h1>
                     <Input
                         type='text'
@@ -94,7 +99,7 @@ class Panel extends React.Component {
                         name='catImg'
                         onChange={this.handleChange} />
                     <Button type='submit' variant="outlined" color="primary" > Add Cat </Button>
-                </form>
+                </form> */}
                 <form className='Panel__resturant' onSubmit={this.handlerestSubmit}>
                     <h1> Add A resturant </h1>
                     <Input
@@ -119,14 +124,8 @@ class Panel extends React.Component {
                         onChange={this.handleChange} />
                     <Button type='submit' variant="outlined" color="primary" > Add Res </Button>
                 </form>
-                <Select value={catId} onChange={this.handleSelect}>
-                    {
-                        categories.map((cat, i) => {
-                            return <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>
-                        })
-                    }
-                </Select>
-                <h1> {catId} </h1>
+                
+                {/* <h1> {catId} </h1> */}
             </div >
         )
     }
