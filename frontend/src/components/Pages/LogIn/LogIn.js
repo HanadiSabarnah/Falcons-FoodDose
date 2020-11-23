@@ -27,13 +27,20 @@ class Login extends Component {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          localStorage.setItem('auth-rest', data.token)
-          localStorage.setItem('userId', data.user._id)
           this.props.setEmail(data.user.email)
           this.props.setName(data.user.name)
+          localStorage.setItem('auth-rest', data.token)
+          if (data.user.role === 'User') {
+            this.props.setUser(data.user._id)
+            localStorage.setItem('userId', data.user._id)
+          }
+          if(data.user.role === 'Admin'){
+            this.props.setAdmin(data.user._id)
+            localStorage.setItem('adminId', data.user._id)
+          }
           console.log(data)
-          this.props.otherProps.history.push('/home')
-        }else {
+          this.props.otherProps.history.push('/')
+        } else {
           alert('wrong credentials')
         }
 

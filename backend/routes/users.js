@@ -3,7 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
-const auth = require('../middleware')
+const auth = require('../middlewares/middleware')
 
 
 router.get('/auth', auth, (req, res) => {
@@ -11,6 +11,7 @@ router.get('/auth', auth, (req, res) => {
         id: req.user._id,
         name: req.user.name,
         email: req.user.email,
+        role: req.user.role,
         success: true
     })
 })
@@ -29,7 +30,9 @@ router.post('/signup', async (req, res) => {
         let user = new User({
             name: req.body.UserName,
             email: req.body.Email,
-            password: hashedPw
+            password: hashedPw,
+            role : 'User',
+            request: false
         })
         await user.save()  // storing hashedpw to db
         const token = await jwt.sign({ _id: user._id }, 'secret') // generate token

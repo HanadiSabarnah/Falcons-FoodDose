@@ -79,7 +79,7 @@ class Panel extends React.Component {
         const { resName, resImg, resPhone, resAddress, catId, categories } = this.state
         return (
             <div className='Panel'>
-                <Select value={catId} onChange={this.handleSelect}>
+                <Select value={catId} onChange={this.handleSelect} style={{width:'30%'}}>
                     {
                         categories.map((cat, i) => <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>)
                     }
