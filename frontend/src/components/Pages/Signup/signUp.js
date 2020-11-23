@@ -92,7 +92,7 @@ class SignUp extends Component {
                                 type="submit"
                                 size="large"
                                 variant="contained"
-                                justifyContent="center"
+                                
                             >
                                 Signup</Button>
                         </FormControl><br /><br />

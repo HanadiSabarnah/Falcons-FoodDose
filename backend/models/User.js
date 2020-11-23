@@ -32,6 +32,10 @@ const userSchema = mongoose.Schema({
     },
     request: {
         type: Boolean
+    },
+    restaurant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant'
     }
 }, { timestamps: true })
 

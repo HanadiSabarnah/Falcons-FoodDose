@@ -75,11 +75,33 @@ router.post('/login', async (req, res) => {
     }
 })
 
-// router.get("/logout", (req, res) => {
-//     res.header("jwt-auth", "", { maxAge: 1 }).json({
-//       token: ""
-//     })
-//   })
+router.post('/request' , (req,res) => {
+    console.log(req.body)
+    User.findOneAndUpdate({ '_id': req.body.userId } ,{ 'request': true })
+        .then( (user) => res.status(201).json({success:true}) )
+        .catch( (err) => res.status(401).json({success:false,err}) )
+})
+
+router.get('/getrequsers' , (req,res) => {
+    
+    User.find({ 'request': true })
+        .then( (users) => res.status(201).json(users) )
+        .catch( (err) => res.status(401).json({success:false,err}) )
+})
+
+router.post('/removerequsers' , (req,res) => {
+    
+    User.findOneAndUpdate({ '_id': req.body.userId },{ 'request': false })
+        .then( (users) => res.status(201).json(users) )
+        .catch( (err) => res.status(401).json({success:false,err}) )
+})
+
+router.post('/owner' , (req,res) => {
+    console.log(req.body)
+    User.findOneAndUpdate({ '_id': req.body.userId } ,{ 'role': 'Owner','request':false })
+        .then( (user) => res.status(201).json({success:true}) )
+        .catch( (err) => res.status(401).json({success:false,err}) )
+})
 
 
 
