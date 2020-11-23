@@ -6,10 +6,10 @@ const auth = async (req, res, next) => {
 
   try {
 
-    const token = req.header('auth-rest')
+    const token = req.header('auth-rest') // token sent from front end
     console.log(token)
     if (token) {
-      const decoded = await jwt.verify(token, 'secret')
+      const decoded = await jwt.verify(token, 'secret') // { _id:user id stored in db   , date...  }
       // console.log(userId)
       const user = await User.findOne({ _id: decoded._id })
       // console.log(user)

@@ -5,8 +5,6 @@ import './Panel.css'
 
 class Panel extends React.Component {
     state = {
-        catName: '',
-        catImg: '',
         resName: '',
         resImg: '',
         resPhone: '',
@@ -78,7 +76,7 @@ class Panel extends React.Component {
 
 
     render() {
-        const { catName, catImg, resName, resImg, resPhone, resAddress, catId, categories } = this.state
+        const { resName, resImg, resPhone, resAddress, catId, categories } = this.state
         return (
             <div className='Panel'>
                 <Select value={catId} onChange={this.handleSelect}>
