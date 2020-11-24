@@ -1,27 +1,48 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 
-const userSchema = new mongoose.Schema({
-  UserName: { type: String, required: [true, 'Please enter your name'] },
-  Password: {
-    type: String, required: [true, 'Please enter your password'],
-    minlength: [6, 'Minimum password length is 6 characters']
-
-  },
-  Email: {
-    type: String, required: [true, 'Please enter your email']
-  }
-})
+//Scheema
+const validateEmail = (email) => {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+}
 
 
+const userSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        required: 'Email address is required',
+        validate: [validateEmail, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength : 6
+    },
+    role: {
+        type : String
+    },
+    request: {
+        type: Boolean
+    },
+    restaurant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant'
+    }
+}, { timestamps: true })
 
 
-
-
-
-
+//Create the model according to Scheema
 const User = mongoose.model('User', userSchema);
 
 
-module.exports = User;
-
+//exporting the model to use mongoose functions 
+module.exports = User

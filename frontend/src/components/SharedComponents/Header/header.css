@@ -1,0 +1,17 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+
+.header__logo{
+    width: 50px;
+    object-fit: contain;
+}
+
+.header__titles{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

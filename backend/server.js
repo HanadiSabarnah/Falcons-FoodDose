@@ -20,9 +20,9 @@ app.get('/', (req, res) => {
 // app.use('/fooddose', routers)
 
 app.use('/users', require('./routes/users'));
-app.use('/resturants', require('./routes/resturants'));
+app.use('/restaurant', require('./routes/resturants'));
 app.use('/categories', require('./routes/categories'));
-
+app.use('/menu', require('./routes/menu'));
 
 const port = process.env.PORT || 5000
 
