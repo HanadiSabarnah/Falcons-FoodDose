@@ -55,7 +55,7 @@ class App extends Component {
                     <Switch>
                         <Route path="/panel" exact render={() => <Panel />} />
                         {/* <Route path="/" exact render={() => <Welcome />} /> */}
-                        <Route path="/home" exact render={() => <Home />} />
+                        <Route path="/" exact render={() => <Home />} />
                         <Route path="/login" exact render={(props) => <Login setEmail={this.setEmail} setName={this.setName} otherProps={props} />} />
                         <Route path="/signup" exact render={(props) => <SignUp setEmail={this.setEmail} setName={this.setName} otherProps={props} />} />
                         {/* <Route path="/logout" exact render={() => <Logout />} /> */}

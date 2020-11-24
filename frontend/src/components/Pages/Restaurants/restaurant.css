@@ -1,9 +1,17 @@
+.restaurants{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .restaurant {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     margin: 10px 25px;
+    width: 45vw;
 }
 
 .restaurant__Link {
