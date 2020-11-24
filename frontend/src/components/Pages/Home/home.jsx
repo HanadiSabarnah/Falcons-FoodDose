@@ -3,8 +3,6 @@ import React from 'react';
 import './home.css'
 // import Logout from '../logout/logout.js'
 import Category from './Category';
-import { Button } from '@material-ui/core'
-import { Link } from "react-router-dom";
 // import Title from '../../rest-toDelete/Title/title'
 
 
@@ -37,9 +35,6 @@ class Home extends React.Component {
                         categories ? categories.map((categ, i) => <Category category={categ} key={i} />) : <div></div>
                     }
                 </div>
-                {
-                    this.props.adminId && this.props.login ? <Link to='/admin'><Button> Go to admin Panel </Button></Link> : <div></div>
-                }
             </div>
         );
     }
