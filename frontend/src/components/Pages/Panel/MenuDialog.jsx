@@ -6,7 +6,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function MenuDialog({ setType,setPrice,addITem,type,price }) {
+export default function MenuDialog({ setType, setPrice, addItem, type, price }) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -23,8 +23,8 @@ export default function MenuDialog({ setType,setPrice,addITem,type,price }) {
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Add yo your menu
+            <Button variant="contained" id="logbtn" onClick={handleClickOpen}>
+                Add item
       </Button>
             <Dialog
                 open={open}
@@ -34,23 +34,18 @@ export default function MenuDialog({ setType,setPrice,addITem,type,price }) {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Add to your menu ! "}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{" Add item to your menu "}</DialogTitle>
                 <DialogContent>
                     <div style={{ display: 'flex' }}>
-                        <TextField value={type} onChange={setType} />
-                        <TextField value={price} onChange={setPrice} />
-                        <Button onClick={addITem}> Add to your menu </Button>
+                        <TextField style={{margin:'5px'}} value={type} onChange={setType} id="outlined-basic" label="Item" variant="outlined" />
+                        <TextField style={{margin:'5px'}} value={price} onChange={setPrice} id="outlined-basic" label="Price" variant="outlined" />
                     </div>
-
-
-
-
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={addItem} variant="contained" id="logbtn"> Add </Button>
+                    <Button onClick={handleClose} variant="contained" id="logbtn">
                         Close
-          </Button>
-
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>

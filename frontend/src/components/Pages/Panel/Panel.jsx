@@ -87,7 +87,7 @@ class Panel extends React.Component {
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                this.setState({ ownerRest: data.user.restaurant,restId:data.user.restaurant._id })
+                this.setState({ ownerRest: data.user.restaurant, restId: data.user.restaurant._id })
             })
     }
 
@@ -105,7 +105,7 @@ class Panel extends React.Component {
 
 
     render() {
-        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest,restId } = this.state
+        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest, restId } = this.state
         return (
             <div className='Panel'>
                 <div className='Panel__profile'>
@@ -122,10 +122,9 @@ class Panel extends React.Component {
                                 }
                             </Select>
                         </div>
-
                         <OwnerForm resName={resName} resImg={resImg} resPhone={resPhone} resAddress={resAddress} onChange={this.handleChange} onSubmit={this.handlerestSubmit} />
                     </div>
-                    : <div className='Panel__menu'> <OwnerMenu restId={restId} /></div>
+                    : <OwnerMenu restId={restId} />
                 }
 
 
