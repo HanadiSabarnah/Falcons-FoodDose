@@ -38,7 +38,7 @@ class Home extends React.Component {
                     }
                 </div>
                 {
-                    this.props.adminId ? <Link to='/admin'><Button> Go to admin Panel </Button></Link> : <div></div>
+                    this.props.adminId && this.props.login ? <Link to='/admin'><Button> Go to admin Panel </Button></Link> : <div></div>
                 }
             </div>
         );

@@ -29,7 +29,7 @@ class SignUp extends Component {
                 localStorage.setItem('userId' , data.user._id)
                 this.props.setEmail(data.user.email)
                 this.props.setName(data.user.name)
-                this.props.setUser(data.user._id)
+                this.props.setLogin(true)
                 console.log(data)
                 this.props.otherProps.history.push('/')
             });
