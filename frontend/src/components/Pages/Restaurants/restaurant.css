@@ -1,8 +1,9 @@
 .restaurants{
     display: flex;
-    flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
 }
 
 .restaurant {

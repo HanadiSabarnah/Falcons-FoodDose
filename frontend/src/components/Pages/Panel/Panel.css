@@ -1,7 +1,31 @@
 .Panel{
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Panel__form{
+    flex: .75;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.Panel__select{
+    flex: .2;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+}
+
+.Panel__profile{
+    flex: .25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .Panel__category{
@@ -11,7 +35,58 @@
 }
 
 .Panel__resturant{
+    flex: .8;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    /* margin-left: 40px; */
 }
+
+.Panel__menu{
+    flex: .7;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: center; */
+}
+
+.admin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin__user{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Oprofile{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Oprofile__img{
+    width: 70%;
+    object-fit: contain;
+    border-radius: 150px;
+
+}
+
+.width{
+    width: 100% !important;
+}
+
+.form__button{
+    margin-top: 15px !important;
+}
+
+

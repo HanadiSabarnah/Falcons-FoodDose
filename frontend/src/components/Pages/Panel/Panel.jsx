@@ -1,29 +1,39 @@
 import React from 'react'
 import { Input, Button, MenuItem, Select } from '@material-ui/core'
-
+import OwnerProfile from './OwnerProfile'
+import OwnerForm from './OwnerForm'
+import OwnerMenu from './OwnerMenu'
 import './Panel.css'
 
 class Panel extends React.Component {
-    state = {
-        resName: '',
-        resImg: '',
-        resPhone: '',
-        resAddress: '',
-        catId: '',
-        restId: '',
-        random: '',
-        categories: []
+    constructor(props) {
+        super(props)
 
+        this.state = {
+            resName: '',
+            resImg: '',
+            resPhone: '',
+            resAddress: '',
+            catId: '',
+            restId: '',
+            categories: [],
+            ownerRest: []
+
+        }
     }
+
+
+
 
     componentDidMount = () => {
         this.getCat()
+        this.getOwnerRest({ ownerId: this.props.ownerId })
     }
 
     handleChange = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
-        console.log(value)
+        // console.log(value)
     }
 
     getCat = () => {
@@ -36,16 +46,6 @@ class Panel extends React.Component {
             .then(data => this.setState({ categories: data.categories }))
     }
 
-    addCat = (obj) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(obj)
-        };
-        fetch('/categories/createCat', requestOptions)
-            .then(response => response.json())
-            .then(data => this.setState({ catId: data.id }));
-    }
 
     addRest = (obj) => {
         const requestOptions = {
@@ -53,15 +53,44 @@ class Panel extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('/resturants/createRes', requestOptions)
+        fetch('/restaurant/createRes', requestOptions)
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => {
+                console.log(data)
+                this.connectRest({ restId: data._id, ownerId: this.props.ownerId })
+            })
     }
 
-    handleCatSubmit = (e) => {
-        e.preventDefault()
-        this.addCat(this.state)
+    connectRest = (obj) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        fetch('/users/rest', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                this.setState({
+                    ownerRest: data.user.restaurant
+                })
+            })
     }
+
+    getOwnerRest = (obj) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        fetch('/users/ownerrest', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                this.setState({ ownerRest: data.user.restaurant,restId:data.user.restaurant._id })
+            })
+    }
+
 
     handlerestSubmit = (e) => {
         e.preventDefault()
@@ -76,54 +105,32 @@ class Panel extends React.Component {
 
 
     render() {
-        const { resName, resImg, resPhone, resAddress, catId, categories } = this.state
+        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest,restId } = this.state
         return (
             <div className='Panel'>
-                <Select value={catId} onChange={this.handleSelect}>
-                    {
-                        categories.map((cat, i) => <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>)
-                    }
-                </Select>
-                {/* <form className='Panel__category' onSubmit={this.handleCatSubmit}>
-                    <h1>Add a category</h1>
-                    <Input
-                        type='text'
-                        value={catName}
-                        name='catName'
-                        onChange={this.handleChange} />
-                    <Input
-                        type='text'
-                        value={catImg}
-                        name='catImg'
-                        onChange={this.handleChange} />
-                    <Button type='submit' variant="outlined" color="primary" > Add Cat </Button>
-                </form> */}
-                <form className='Panel__resturant' onSubmit={this.handlerestSubmit}>
-                    <h1> Add A resturant </h1>
-                    <Input
-                        type='text'
-                        value={resName}
-                        name='resName'
-                        onChange={this.handleChange} />
-                    <Input
-                        type='text'
-                        value={resImg}
-                        name='resImg'
-                        onChange={this.handleChange} />
-                    <Input
-                        type='text'
-                        value={resPhone}
-                        name='resPhone'
-                        onChange={this.handleChange} />
-                    <Input
-                        type='text'
-                        value={resAddress}
-                        name='resAddress'
-                        onChange={this.handleChange} />
-                    <Button type='submit' variant="outlined" color="primary" > Add Res </Button>
-                </form>
-                
-                {/* <h1> {catId} </h1> */}
+                <div className='Panel__profile'>
+                    <OwnerProfile ownerRest={ownerRest} />
+                </div>
+                { ownerRest.length === 0 ?
+                    <div className='Panel__form'>
+                        <div className='Panel__select'>
+
+                            <h3> Restaurants Categories </h3>
+                            <Select className='width' value={catId} onChange={this.handleSelect} style={{ width: '30%' }}>
+                                {
+                                    categories.map((cat, i) => <MenuItem key={i} value={cat._id}>{cat.Name}</MenuItem>)
+                                }
+                            </Select>
+                        </div>
+
+                        <OwnerForm resName={resName} resImg={resImg} resPhone={resPhone} resAddress={resAddress} onChange={this.handleChange} onSubmit={this.handlerestSubmit} />
+                    </div>
+                    : <div className='Panel__menu'> <OwnerMenu restId={restId} /></div>
+                }
+
+
+
+
             </div>
         )
     }
