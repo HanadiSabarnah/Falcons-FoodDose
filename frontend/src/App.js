@@ -75,13 +75,12 @@ class App extends Component {
                     <Header adminId={adminId} ownerId={ownerId} userId={userId} setAdmin={this.setAdmin} setOwner={this.setOwner} setUser={this.setUser} login={login} setLogin={this.setLogin} />
                     <Switch>
 
-                        <Route path="/panel" exact render={() => <Panel ownerId={ownerId}/>} />
+                        <Route path="/panel" exact render={() => ownerId ? <Panel ownerId={ownerId} /> : <Redirect to='/' />} />
                         <Route path="/" exact render={() => <Home />} />
-
                         <Route path="/admin" exact render={() => (adminId) ? <AdminPanel /> : <Redirect to='/' />} />
                         <Route path="/login" exact render={(props) => <Login setEmail={this.setEmail} setName={this.setName} setUser={this.setUser} setOwner={this.setOwner} setLogin={this.setLogin} setAdmin={this.setAdmin} otherProps={props} />} />
                         <Route path="/signup" exact render={(props) => <SignUp setEmail={this.setEmail} setName={this.setName} setLogin={this.setLogin} setUser={this.setUser} otherProps={props} />} />
-                        <Route path="/category/:id" exact component={Restaurants} />
+                        <Route path="/category/:id" exact render={(props) => <Restaurants otherProps={props} />} />
                         <Route path="/restaurant/:id" exact component={Menu} />
 
                     </Switch>
