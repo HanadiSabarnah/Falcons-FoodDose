@@ -40,7 +40,7 @@ class App extends Component {
                 'auth-rest': localStorage.getItem('auth-rest')
             },
         };
-        fetch('users/auth', requestOptions)
+        fetch('http://localhost:5000/users/auth', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -68,15 +68,15 @@ class App extends Component {
 
         const { name, email, adminId, userId, login, ownerId } = this.state
 
-        console.log('name and email are', name + email)
+        // console.log('name and email are', name + email)
         return (
             <div className="App" >
                 <div>
                     <Header adminId={adminId} ownerId={ownerId} userId={userId} setAdmin={this.setAdmin} setOwner={this.setOwner} setUser={this.setUser} login={login} setLogin={this.setLogin} />
                     <Switch>
 
-                        <Route path="/panel" exact render={() => <Panel ownerId={ownerId}/>} />
-                        <Route path="/" exact render={() => <Home />} />
+                        <Route path="/panel" exact render={() => ownerId?  <Panel name={name} email={email} ownerId={ownerId}/> : <Redirect to='/' />} />
+                        <Route path="/" exact render={() => <Home />} />s
 
                         <Route path="/admin" exact render={() => (adminId) ? <AdminPanel /> : <Redirect to='/' />} />
                         <Route path="/login" exact render={(props) => <Login setEmail={this.setEmail} setName={this.setName} setUser={this.setUser} setOwner={this.setOwner} setLogin={this.setLogin} setAdmin={this.setAdmin} otherProps={props} />} />

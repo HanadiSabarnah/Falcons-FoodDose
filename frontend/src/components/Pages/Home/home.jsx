@@ -18,7 +18,7 @@ class Home extends React.Component {
         this.getCategories()
     }
     getCategories = () => {
-        fetch('/categories/getCategories')
+        fetch('http://localhost:5000/categories/getCategories')
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -30,7 +30,7 @@ class Home extends React.Component {
         const { categories } = this.state
         return (
             <div className='home'>
-                <div class='categories'>
+                <div className='categories'>
                     {
                         categories ? categories.map((categ, i) => <Category category={categ} key={i} />) : <div></div>
                     }

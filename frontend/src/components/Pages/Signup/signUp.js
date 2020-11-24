@@ -22,7 +22,7 @@ class SignUp extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('users/signup', requestOptions)
+        fetch('http://localhost:5000/users/signup', requestOptions)
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('auth-rest', data.token)

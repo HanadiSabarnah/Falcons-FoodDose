@@ -21,7 +21,7 @@ class Restaurants extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('/restaurant/getRestaurants', requestOptions)
+        fetch('http://localhost:5000/restaurant/getRestaurants', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
