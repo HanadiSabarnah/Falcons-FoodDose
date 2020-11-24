@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button, MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@material-ui/core'
 import OwnerProfile from './OwnerProfile'
 import OwnerForm from './OwnerForm'
 import OwnerMenu from './OwnerMenu'
@@ -41,7 +41,7 @@ class Panel extends React.Component {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         };
-        fetch('/categories/getCategories', requestOptions)
+        fetch('http://localhost:5000/categories/getCategories', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({ categories: data.categories }))
     }
@@ -53,7 +53,7 @@ class Panel extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('/restaurant/createRes', requestOptions)
+        fetch('http://localhost:5000/restaurant/createRes', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -83,7 +83,7 @@ class Panel extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('/users/ownerrest', requestOptions)
+        fetch('http://localhost:5000/users/ownerrest', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -105,11 +105,14 @@ class Panel extends React.Component {
 
 
     render() {
-        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest, restId } = this.state
+
+        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest,restId } = this.state
+        const { email, name} = this.props
+
         return (
             <div className='Panel'>
                 <div className='Panel__profile'>
-                    <OwnerProfile ownerRest={ownerRest} />
+                    <OwnerProfile email={email} name={name} ownerRest={ownerRest} />
                 </div>
                 { ownerRest.length === 0 ?
                     <div className='Panel__form'>

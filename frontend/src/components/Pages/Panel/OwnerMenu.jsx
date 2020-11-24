@@ -25,7 +25,7 @@ class OwnerMenu extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('menu/getItems', requestOptions)
+        fetch('http://localhost:5000/menu/getItems', requestOptions)
             .then(response => response.json())
             .then(data => this.setState({ menu: data }))
 
@@ -38,7 +38,7 @@ class OwnerMenu extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('menu/additem', requestOptions)
+        fetch('http://localhost:5000/menu/additem', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -71,8 +71,10 @@ class OwnerMenu extends React.Component {
 
     render() {
         const { restId } = this.props
+
         const { type, price, menu } = this.state
         console.log(menu)
+
         return (
             <div className='Panel__menu'>
                 <div>

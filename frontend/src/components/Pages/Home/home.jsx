@@ -18,7 +18,7 @@ class Home extends React.Component {
         this.getCategories()
     }
     getCategories = () => {
-        fetch('/categories/getCategories')
+        fetch('http://localhost:5000/categories/getCategories')
             .then(response => response.json())
             .then(data => {
                 console.log(data)
