@@ -3,7 +3,7 @@ import './header.css'
 import DialogHeader from './Dialog'
 import { Button } from '@material-ui/core';
 
-const Header = ({ userId,login,setLogin }) => {
+const Header = ({ userId,login,setLogin,setAdmin,setUser,setOwner }) => {
 
     const LogOut = () => {
         localStorage.removeItem('auth-rest')
@@ -11,6 +11,9 @@ const Header = ({ userId,login,setLogin }) => {
         localStorage.removeItem('adminId')
         localStorage.removeItem('ownerId')
         setLogin(false)
+        setAdmin('')
+        setUser('')
+        setOwner('')
     }
 
     return (
