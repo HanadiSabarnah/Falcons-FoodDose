@@ -65,14 +65,14 @@ class App extends Component {
     setLogin = (boolean) => this.setState({ login: boolean })
 
     render() {
-        const { name, email, adminId, userId, login } = this.state
+        const { name, email, adminId, userId, login,ownerId } = this.state
         console.log('name and email are', name + email)
         return (
             <div className="App" >
                 <div>
                     <Header userId={userId} setAdmin={this.setAdmin} setOwner={this.setOwner} setUser={this.setUser} login={login} setLogin={this.setLogin} />
                     <Switch>
-                        <Route path="/panel" exact render={() => <Panel />} />
+                        <Route path="/panel" exact render={() => <Panel ownerId={ownerId}/>} />
                         <Route path="/" exact render={() => <Home adminId={adminId} login={login} />} />
                         <Route path="/admin" exact render={() => (adminId) ? <AdminPanel /> : <Redirect to='/' />} />
                         <Route path="/login" exact render={(props) => <Login setEmail={this.setEmail} setName={this.setName} setUser={this.setUser} setOwner={this.setOwner} setLogin={this.setLogin} setAdmin={this.setAdmin} otherProps={props} />} />

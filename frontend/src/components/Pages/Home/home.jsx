@@ -31,7 +31,7 @@ class Home extends React.Component {
     render() {
         const { categories } = this.state
         return (
-            <div>
+            <div className='home'>
                 <div class='categories'>
                     {
                         categories ? categories.map((categ, i) => <Category category={categ} key={i} />) : <div></div>

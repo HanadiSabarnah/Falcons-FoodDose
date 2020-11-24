@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.use('/users', require('./routes/users'));
 app.use('/restaurant', require('./routes/resturants'));
 app.use('/categories', require('./routes/categories'));
-
+app.use('/menu', require('./routes/menu'));
 
 const port = process.env.PORT || 5000
 
