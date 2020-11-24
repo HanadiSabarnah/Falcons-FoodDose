@@ -43,7 +43,7 @@ const Header = ({ userId, login, setLogin, setAdmin, setUser, setOwner, adminId,
                             <div className='logbtn'>
                                 <Button id='logbtn' variant="contained" onClick={LogOut} > LogOut </Button>
                             </div>
-                            <Link to='/panel' className='avatar'>
+                            <Link to={adminId? '/admin': ownerId? '/panel':'/profile'}  className='avatar'>
                                 <Avatar className='header__avatar' alt={userId} src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" />
                             </Link>
                         </div>
