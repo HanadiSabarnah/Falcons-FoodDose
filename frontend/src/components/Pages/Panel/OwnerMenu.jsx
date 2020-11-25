@@ -27,7 +27,11 @@ class OwnerMenu extends React.Component {
         };
         fetch('http://localhost:5000/menu/getItems', requestOptions)
             .then(response => response.json())
-            .then(data => this.setState({ menu: data }))
+            .then(data => {
+                if(data.success){
+                    this.setState({ menu: data.items })
+                }
+            })
 
     }
 
@@ -82,11 +86,11 @@ class OwnerMenu extends React.Component {
                 </div>
                 <div className="menu">
                     {
-                        menu.map((item, i) => {
+                        menu ? menu.map((item, i) => {
                             return <div key={i} className="menuItem">
                                 <ItemCard item={item} deleteItem={this.deleteItem}/>
                             </div>
-                        })
+                        }) : <div></div>
                     }
                 </div>
             </div>

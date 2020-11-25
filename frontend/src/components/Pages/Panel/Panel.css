@@ -59,12 +59,38 @@
 
 .admin {
     display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.admin__users{
+    flex: .75;
+    margin-top: 40px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.Aprofile {
+    flex: .25;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(245, 245, 245, .90);
+    border-radius: 0px 0px 50px 0px ;
+}
+
+.Aprofile__img{
+    width: 70%;
+    object-fit: contain;
+    border-radius: 150px;
+}
+
 .admin__user {
+    margin-top: 50px;
     width: 50%;
     display: flex;
     justify-content: space-between;
@@ -122,4 +148,43 @@
 
 .menuItem{
     margin: 10px;
+}
+
+.status{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.status__category{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:  rgba(255, 99, 71, 0.274);
+    padding: 5px 20px;
+    border-radius: 30px;
+}
+
+.status__rest{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:  rgba(255, 99, 71, 0.274);
+    padding: 5px 20px;
+    border-radius: 30px;
+}
+
+.status__users{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 99, 71, 0.274);
+    padding: 5px 20px;
+    border-radius: 30px;
+}
+
+.status__avatar{
+    margin-right: 15px;
 }

@@ -1,5 +1,7 @@
 import { Button } from '@material-ui/core'
 import React from 'react'
+import AdminProfile from './AdminProfile'
+import AdminStatus from './AdminStatus'
 
 
 
@@ -52,23 +54,27 @@ class AdminPanel extends React.Component {
 
 
 
-render() {
-    const { reqUsers } = this.state
-    return (
-        <div className='admin'>
-            {
-                reqUsers.map((user, i) => (
-                    <div className='admin__user' key={i} >
-                        <h3> {user.name} </h3>
-                        <Button onClick={() => this.makeOwnder({userId: user._id})}> Accept user's request </Button>
-                        <Button onClick={() => this.removeRequest({userId: user._id})} > Remove request </Button>
-                    </div>
+    render() {
+        const { reqUsers } = this.state
+        return (
+            <div className='admin'>
+                <AdminProfile email={'any'} name={'any'} />
+                <div className='admin__users'>
+                    <AdminStatus/>
+                    {
+                        reqUsers.map((user, i) => (
+                            <div className='admin__user' key={i} >
+                                <h3> {user.name} </h3>
+                                <Button onClick={() => this.makeOwnder({ userId: user._id })}> Accept user's request </Button>
+                                <Button onClick={() => this.removeRequest({ userId: user._id })} > Remove request </Button>
+                            </div>
 
-                ))
-            }
-        </div>
-    )
-}
+                        ))
+                    }
+                </div>
+            </div>
+        )
+    }
 }
 
 
