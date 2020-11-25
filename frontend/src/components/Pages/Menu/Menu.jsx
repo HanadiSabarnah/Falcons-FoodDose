@@ -22,7 +22,7 @@ const Menu = (props) => {
         };
         fetch('http://localhost:5000/menu/getItems', requestOptions)
             .then(response => response.json())
-            .then(data => { setMenu(data) })
+            .then(data => { setMenu(data.items) })
     }
 
 
