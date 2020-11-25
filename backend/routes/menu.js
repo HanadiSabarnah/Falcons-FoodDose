@@ -18,6 +18,7 @@ router.post('/additem', (req, res) => {
 router.post('/getitems', (req, res) => {
     console.log(req.body)
     Item.find({ 'resturant': req.body.restId })
+        .populate('resturant')
         .exec((err, items) => {
             if (err) return res.status(401).json({ success: false })
             res.status(201).json(items)

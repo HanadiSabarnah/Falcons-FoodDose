@@ -1,4 +1,6 @@
 import React from 'react'
+import MenuItem from './MenuItem';
+import Restaurant from '../Restaurants/Restaurant'
 
 const Menu = (props) => {
     // console.log(props.match.params.id)
@@ -6,10 +8,10 @@ const Menu = (props) => {
     const restId = props.match.params.id
     React.useEffect(() => {
         // console.log(getMenu);
-        getMenu({restId})
+        getMenu({ restId })
 
         return () => console.log('unmounting...')
-    },[restId]);
+    }, [restId]);
 
     const getMenu = (obj) => {
         const requestOptions = {
@@ -19,13 +21,23 @@ const Menu = (props) => {
         };
         fetch('http://localhost:5000/menu/getItems', requestOptions)
             .then(response => response.json())
-            .then(data => {setMenu(data)})
+            .then(data => { setMenu(data) })
     }
-    console.log(menu);
+
+    console.log(props.match.params.id, menu);
     return (
-        <div className='category'>
-            <img className='category__image' src='' alt='category' />
-            <h4 className='category__title'> item from menu </h4>
+        <div>
+            {
+                menu[0]?
+                <Restaurant restaurant={menu[0].resturant} />:<div></div>
+            }
+            <div className='menu'>
+                {
+                    menu.map((item, i) => {
+                        return <MenuItem restaurantId={menu[0].resturant._id} item={item} key={i} />
+                    })
+                }
+            </div>
         </div>
     )
 }
