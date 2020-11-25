@@ -7,10 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 
-export default function ItemCard({restaurantId, item}) {
-    const addCartItem=(restaurantId,id)=>{
-        console.log(restaurantId,id)
-    }
+export default function ItemCard({restaurantId, item, addCartItem}) {
 
     return (
         <Card className="menuItem">
@@ -32,7 +29,7 @@ export default function ItemCard({restaurantId, item}) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={()=>{addCartItem(restaurantId,item._id)}}>
+                <Button size="small" color="primary" onClick={()=>{addCartItem(item)}}>
                     Add to cart
                 </Button>
             </CardActions>
