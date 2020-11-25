@@ -61,7 +61,7 @@ class OwnerMenu extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})
         };
-        fetch('menu/deleteItem', requestOptions)
+        fetch('http://localhost:5000/menu/deleteItem', requestOptions)
             .then(response => response.json())
             .then(() => {
                 this.componentDidMount()

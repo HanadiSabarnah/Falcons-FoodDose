@@ -1,13 +1,15 @@
 import React from 'react'
 
 const Menu = (props) => {
-    console.log(props.match.params.id)
+    // console.log(props.match.params.id)
     const [menu, setMenu] = React.useState([]);
     const restId = props.match.params.id
     React.useEffect(() => {
-        console.log(getMenu);
+        // console.log(getMenu);
         getMenu({restId})
-    },[menu, restId]);
+
+        return () => console.log('unmounting...')
+    },[restId]);
 
     const getMenu = (obj) => {
         const requestOptions = {
@@ -15,9 +17,9 @@ const Menu = (props) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('menu/getItems', requestOptions)
+        fetch('http://localhost:5000/menu/getItems', requestOptions)
             .then(response => response.json())
-            .then(data => {setMenu(data); console.log('s')})
+            .then(data => {setMenu(data)})
     }
     console.log(menu);
     return (
