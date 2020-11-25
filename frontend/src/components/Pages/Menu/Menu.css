@@ -1,0 +1,23 @@
+.restaurantMenu {
+    display: flex;
+}
+
+
+.restaurantDetail__menu {
+    flex: .75;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.cart__menu{
+    flex: .2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px;
+    background-color: rgb(245, 245, 245, .90);
+    border-radius: 0px 0px 0px 50px ;
+}
