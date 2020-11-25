@@ -21,7 +21,7 @@ router.post('/getitems', (req, res) => {
         .populate('resturant')
         .exec((err, items) => {
             if (err) return res.status(401).json({ success: false })
-            res.status(201).json(items)
+            res.status(201).json({success:true,items})
         })
 })
 

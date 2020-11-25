@@ -3,13 +3,14 @@ import MenuItem from './MenuItem';
 import Restaurant from '../Restaurants/Restaurant'
 
 const Menu = (props) => {
-    // console.log(props.match.params.id)
+    // console.log(props)
     const [menu, setMenu] = React.useState([]);
     const restId = props.match.params.id
     React.useEffect(() => {
         // console.log(getMenu);
-        getMenu({ restId })
 
+        getMenu({restId})
+        console.log(menu);
         return () => console.log('unmounting...')
     }, [restId]);
 
@@ -23,6 +24,7 @@ const Menu = (props) => {
             .then(response => response.json())
             .then(data => { setMenu(data) })
     }
+
 
     console.log(props.match.params.id, menu);
     return (
@@ -38,6 +40,7 @@ const Menu = (props) => {
                     })
                 }
             </div>
+
         </div>
     )
 }
