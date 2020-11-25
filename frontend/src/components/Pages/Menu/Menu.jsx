@@ -7,7 +7,9 @@ const Menu = (props) => {
     React.useEffect(() => {
         // console.log(getMenu);
         getMenu({restId})
-    },[menu]);
+
+        return () => console.log('unmounting...')
+    },[restId]);
 
     const getMenu = (obj) => {
         const requestOptions = {
