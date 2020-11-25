@@ -17,7 +17,7 @@ class Panel extends React.Component {
             catId: '',
             restId: '',
             categories: [],
-            ownerRest: []
+            ownerRest: ''
 
         }
     }
@@ -67,13 +67,16 @@ class Panel extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('/users/rest', requestOptions)
+        fetch('http://localhost:5000/users/rest', requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                this.setState({
-                    ownerRest: data.user.restaurant
-                })
+                console.log('>>>',data)
+                if (data.user.restaurant) {
+                    this.setState({
+                        ownerRest: data.user.restaurant,
+                        restId: data.user.restaurant._id
+                    })
+                }
             })
     }
 
@@ -87,7 +90,9 @@ class Panel extends React.Component {
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                this.setState({ ownerRest: data.user.restaurant, restId: data.user.restaurant._id })
+                if (data.user.restaurant) {
+                    this.setState({ ownerRest: data.user.restaurant, restId: data.user.restaurant._id })
+                }
             })
     }
 
@@ -106,15 +111,15 @@ class Panel extends React.Component {
 
     render() {
 
-        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest,restId } = this.state
-        const { email, name} = this.props
+        const { resName, resImg, resPhone, resAddress, catId, categories, ownerRest, restId } = this.state
+        const { email, name } = this.props
 
         return (
             <div className='Panel'>
                 <div className='Panel__profile'>
                     <OwnerProfile email={email} name={name} ownerRest={ownerRest} />
                 </div>
-                { ownerRest.length === 0 ?
+                { ownerRest === '' ?
                     <div className='Panel__form'>
                         <div className='Panel__select'>
 

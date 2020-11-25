@@ -25,15 +25,21 @@ class SignUp extends Component {
         fetch('http://localhost:5000/users/signup', requestOptions)
             .then(response => response.json())
             .then(data => {
-                localStorage.setItem('auth-rest', data.token)
-                localStorage.setItem('userId', data.user._id)
-                this.props.setEmail(data.user.email)
-                this.props.setName(data.user.name)
+                if (data.success) {
+                    console.log(data)
+                    localStorage.setItem('auth-rest', data.token)
+                    localStorage.setItem('userId', data.user._id)
+                    this.props.setEmail(data.user.email)
+                    this.props.setName(data.user.name)
 
-                this.props.setUser(data.user.user._id)
-                this.props.setLogin(true)
-                console.log(data)
-                this.props.otherProps.history.push('/')
+                    this.props.setUser(data.user._id)
+                    this.props.setLogin(true)
+                    console.log(data)
+                    this.props.otherProps.history.push('/')
+                }else{
+                    alert('Error')
+                }
+
             });
     }
 

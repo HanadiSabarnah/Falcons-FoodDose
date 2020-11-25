@@ -10,7 +10,7 @@ const OwnerProfile = ({ ownerRest,name,email }) => {
             <h3>{name}</h3>
             <h3> {email} </h3>
             {
-                ownerRest.length !== 0 ? <div className='Oprofile__restaurant'>
+                ownerRest !== '' ? <div className='Oprofile__restaurant'>
                     <img className='rest__img' src={ownerRest.Image} alt='restImage' />
                     <h4>{ownerRest.Name}</h4>
                     <h4>{ownerRest.Address}</h4>

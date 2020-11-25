@@ -34,7 +34,7 @@ export default function DialogHeader({ userId }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         };
-        fetch('users/request', requestOptions)
+        fetch('http://localhost:5000/users/request', requestOptions)
             .then(response => response.json())
             .then(data => console.log(data))
     }

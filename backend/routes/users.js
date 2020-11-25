@@ -31,7 +31,7 @@ router.post('/signup', async (req, res) => {
             name: req.body.UserName,
             email: req.body.Email,
             password: hashedPw,
-            role : 'User',
+            role: 'User',
             request: false
         })
         await user.save()  // storing hashedpw to db
@@ -75,46 +75,47 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/request' , (req,res) => {
+router.post('/request', (req, res) => {
     console.log(req.body)
-    User.findOneAndUpdate({ '_id': req.body.userId } ,{ 'request': true })
-        .then( (user) => res.status(201).json({success:true}) )
-        .catch( (err) => res.status(401).json({success:false,err}) )
+    User.findOneAndUpdate({ '_id': req.body.userId }, { 'request': true })
+        .then((user) => res.status(201).json({ success: true }))
+        .catch((err) => res.status(401).json({ success: false, err }))
 })
 
-router.get('/getrequsers' , (req,res) => {
-    
+router.get('/getrequsers', (req, res) => {
+
     User.find({ 'request': true })
-        .then( (users) => res.status(201).json(users) )
-        .catch( (err) => res.status(401).json({success:false,err}) )
+        .then((users) => res.status(201).json(users))
+        .catch((err) => res.status(401).json({ success: false, err }))
 })
 
-router.post('/removerequsers' , (req,res) => {
-    
-    User.findOneAndUpdate({ '_id': req.body.userId },{ 'request': false })
-        .then( (users) => res.status(201).json(users) )
-        .catch( (err) => res.status(401).json({success:false,err}) )
+router.post('/removerequsers', (req, res) => {
+
+    User.findOneAndUpdate({ '_id': req.body.userId }, { 'request': false })
+        .then((users) => res.status(201).json(users))
+        .catch((err) => res.status(401).json({ success: false, err }))
 })
 
-router.post('/owner' , (req,res) => {
+router.post('/owner', (req, res) => {
     console.log(req.body)
-    User.findOneAndUpdate({ '_id': req.body.userId } ,{ 'role': 'Owner','request':false })
-        .then( (user) => res.status(201).json({success:true}) )
-        .catch( (err) => res.status(401).json({success:false,err}) )
+    User.findOneAndUpdate({ '_id': req.body.userId }, { 'role': 'Owner', 'request': false })
+        .then((user) => res.status(201).json({ success: true }))
+        .catch((err) => res.status(401).json({ success: false, err }))
 })
 
-router.post('/rest' , (req,res) => {
-    console.log(req.body)
-    User.findOneAndUpdate({ '_id': req.body.ownerId } ,{ 'restaurant': req.body.restId }).populate('restaurant')
-        .then( (user) => res.status(201).json({success:true,user}) )
-        .catch( (err) => res.status(401).json({success:false,err}) )
+router.post('/rest', async(req, res) => {
+    console.log('rest', req.body)
+    await User.findOneAndUpdate({ '_id': req.body.ownerId }, { 'restaurant': req.body.restId })
+    User.findOne({ '_id': req.body.ownerId }).populate('restaurant')
+        .then((user) => res.status(201).json({ success: true, user }))
+        .catch((err) => res.status(401).json({ success: false, err }))
 })
 
-router.post('/ownerrest' , (req,res) => {
-    console.log(req.body)
-    User.findOne({ '_id': req.body.ownerId } ).populate('restaurant')
-        .then( (user) => res.status(201).json({success:true,user}) )
-        .catch( (err) => res.status(401).json({success:false,err}) )
+router.post('/ownerrest', (req, res) => {
+    console.log('ownerrest', req.body)
+    User.findOne({ '_id': req.body.ownerId }).populate('restaurant')
+        .then((user) => res.status(201).json({ success: true, user }))
+        .catch((err) => res.status(401).json({ success: false, err }))
 })
 
 
