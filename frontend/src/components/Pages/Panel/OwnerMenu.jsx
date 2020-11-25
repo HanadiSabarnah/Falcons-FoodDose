@@ -1,5 +1,6 @@
 import React from 'react'
 import MenuDialog from './MenuDialog'
+import ItemCard from './ItemCard'
 
 class OwnerMenu extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class OwnerMenu extends React.Component {
         };
         fetch('http://localhost:5000/menu/getItems', requestOptions)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => this.setState({ menu: data }))
 
     }
 
@@ -49,20 +50,45 @@ class OwnerMenu extends React.Component {
             })
     }
 
-    addITem = () => {
+    addItem = () => {
         this.postReq({ restId: this.props.restId, type: this.state.type, price: this.state.price })
+    }
+
+    deleteItem=(id)=>{
+        console.log(id)
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({id})
+        };
+        fetch('http://localhost:5000/menu/deleteItem', requestOptions)
+            .then(response => response.json())
+            .then(() => {
+                this.componentDidMount()
+            })
     }
 
 
     render() {
         const { restId } = this.props
-        const {type,price} = this.state
+
+        const { type, price, menu } = this.state
+        console.log(menu)
+
         return (
-            <div>
-
-                <h3> Add your menu </h3>
-                <MenuDialog setType={this.setType} setPrice={this.setPrice} addITem={this.addITem} type={type} price={price}/>
-
+            <div className='Panel__menu'>
+                <div>
+                    <MenuDialog setType={this.setType} setPrice={this.setPrice} addItem={this.addItem} type={type} price={price} />
+                </div>
+                <div className="menu">
+                    {
+                        menu.map((item, i) => {
+                            return <div key={i} className="menuItem">
+                                <ItemCard item={item} deleteItem={this.deleteItem}/>
+                            </div>
+                        })
+                    }
+                </div>
             </div>
         )
     }
